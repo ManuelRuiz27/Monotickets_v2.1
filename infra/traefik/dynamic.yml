@@ -1,0 +1,21 @@
+http:
+  routers:
+    api:
+      rule: Host(`localhost`) && PathPrefix(`/api`)
+      service: api
+      entryPoints:
+        - web
+    web:
+      rule: Host(`localhost`)
+      service: web
+      entryPoints:
+        - web
+  services:
+    api:
+      loadBalancer:
+        servers:
+          - url: http://api:3000
+    web:
+      loadBalancer:
+        servers:
+          - url: http://web:80
